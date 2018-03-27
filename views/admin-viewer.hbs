@@ -1,0 +1,92 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Viewers","link":"\/admin\/viewers"}]'}}
+    
+    {{> page_title}}
+
+    <div class="row">
+        <div class="col-12 col-md-8">
+            <div class="card">
+                <h2 class="h5 card-header">
+                    Latest Screenshot
+                </h2>
+                <div class="card-body">
+                    <img src="{{viewer.cached_screenshot_url}}" class="img-fluid" onerrors="this.src='http://placehold.it/1920x1080?text=IMAGE UNAVAILABLE'">
+                    {{timeago viewer.screenshot_last_updated}}
+                </div>
+                {{!--/card-body--}}
+            </div>
+            {{!--/.card--}}
+        </div>
+        {{!--./col--}}
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h2 class="h5 card-header">
+                    Viewer Record Details
+                </h2>
+                {{!--/.card-header--}}
+                <div class="card-body">
+                    <dl>
+                        <dt>
+                            Viewer Name
+                        </dt>
+                        <dd class="text-muted">
+                            {{viewer.name}}
+                        </dd>
+                        <dt>
+                            Display Name
+                        </dt>
+                        <dd class="text-muted">
+                            {{viewer.display_name}}
+                        </dd>
+                        <dt>
+                            Date Created
+                        </dt>
+                        <dd class="text-muted">
+                            {{dateFormat viewer.date_created "YYYY-MM-DD hh:mm A"}}
+                        </dd>
+                        <dt>
+                            Last Edited
+                        </dt>
+                        <dd class="text-muted">
+                            {{dateFormat viewer.date_last_edited "YYYY-MM-DD hh:mm A"}}
+                        </dd>
+                        <dt>
+                            Screenshot Last Updated
+                        </dt>
+                        <dd class="text-muted">
+                            {{dateFormat viewer.screenshot_last_updated "YYYY-MM-DD hh:mm A"}}
+                        </dd>
+                        <dt>
+                            Publish Status
+                        </dt>
+                        <dd class="text-muted">
+                            {{#if viewer.published}}
+                            <i class="fas fa-check text-success"></i>&nbsp; Published {{else}}
+                            <i class="fas fa-ban text-danger"></i>&nbsp; Unublished {{/if}}
+                        </dd>
+                        <dt>
+                            Screen Orientation
+                        </dt>
+                        <dd class="text-muted">
+                            {{viewer.screen_orientation}}
+                        </dd>
+                        <dt>
+                            Viewer Type
+                        </dt>
+                        <dd class="text-muted">
+                            {{viewer.type}}
+                        </dd>
+                    </dl>
+                </div>
+                {{!--/.card-body--}}
+            </div>
+            {{!--/.card--}}
+        </div>
+        {{!--./col--}}
+    </div>
+    {{!--/.row--}}
+
+</div>
+{{!--/.container--}}

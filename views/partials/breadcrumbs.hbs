@@ -1,0 +1,14 @@
+{{#if breadcrumbs}}
+<nav aria-label="breadcrumb" class="mt-4">
+    <ol class="breadcrumb">
+{{#parseJSON breadcrumbs}}
+    {{#each this}}
+        <li class="breadcrumb-item"><a href="{{this.link}}">{{this.text}}</a>
+        </li>
+    {{/each}}
+{{/parseJSON}}
+        <li class="breadcrumb-item active" aria-current="page">{{title}}
+        </li>
+    </ol>
+</nav>
+{{/if}}

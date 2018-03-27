@@ -1,0 +1,24 @@
+.table th.sortable {
+  position: relative;
+  padding-right: 36px; }
+  .table th.sortable:hover {
+    cursor: pointer;
+    opacity: 0.85; }
+  .table th.sortable:after {
+    content: "\f0dc";
+    font-family: Font Awesome\ 5 Free;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px; }
+
+.table th.non-sortable:hover {
+  cursor: not-allowed; }
+
+.table .no-wrap {
+  white-space: nowrap; }
+
+.table-responsive-wrapper {
+  overflow-x: auto; }
+
+/*# sourceMappingURL=style.css.map */

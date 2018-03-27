@@ -1,0 +1,139 @@
+<div class="container-fluid">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"}]'}}
+
+    {{> page_title}}
+
+    <div class="row align-items-center mb-3">
+        <div class="col-12 col-md-3">
+            <p class="m-0 align-middle">
+                Displaying ({{viewer_list.length}}) Viewers
+            </p>
+        </div>
+        {{!--/.col--}}
+        <div class="col-12 col-md-9 text-md-right">
+            <a class="btn btn-primary" href="/admin/viewers/cache">
+                <i class="fa fa-plus"></i>&nbsp; Viewer Screenshots Logs
+            </a>
+            <a class="btn btn-primary" href="/admin/viewers/~/create">
+                <i class="fa fa-plus"></i>&nbsp; Create New Viewer Record
+            </a>
+        </div>
+        {{!--/.col--}}
+    </div>
+    {{!--/.row--}}
+    <div class="table-responsive-wrapper">
+        <table class="table table-striped table-more-responsive tablesorter">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="sortable align-middle">
+                        Viewer Name
+                    </th>
+                    <th class="sortable align-middle">
+                        Display Name
+                    </th>
+                    <th class="sortable align-middle">
+                        Date Created
+                    </th>
+                    <th class="sortable align-middle">
+                        Date Last Edited
+                    </th>
+                    <th class="sortable align-middle">
+                        Screenshot Last Updated
+                    </th>
+                    <th class="sortable align-middle">
+                        Screen Orientation
+                    </th>
+                    <th class="sortable align-middle">
+                        Viewer Type
+                    </th>
+                    <th class="sortable text-center align-middle">
+                        Published
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-sticky-note"></i>
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-info-circle"></i>
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-image"></i>
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-edit"></i>
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-trash"></i>
+                    </th>
+                </tr>
+            </thead>
+            {{!--/thead--}}
+            <tbody>
+                {{#if viewer_list}} {{#each viewer_list}}
+                <tr data-mongodb-id="{{ this._id }}">
+                    <td data-field="name">
+                        {{ this.name }}
+                    </td>
+                    <td data-field="display_name">
+                        {{ this.display_name }}
+                    </td>
+                    <td data-field="date_created" class="no-wrap">
+                        {{dateFormat this.date_created "YYYY-MM-DD hh:mm A"}}
+                    </td>
+                    <td data-field="date_last_edited" class="no-wrap">
+                        {{dateFormat this.date_last_edited "YYYY-MM-DD hh:mm A"}}
+                    </td>
+                    <td data-field="screenshot_last_updated" class="no-wrap">
+                        {{dateFormat this.screenshot_last_updated "YYYY-MM-DD hh:mm A"}}
+                    </td>
+                    <td data-field="screen_orientation" class="no-wrap">
+                        {{ this.screen_orientation }}
+                    </td>
+                    <td data-field="type" class="no-wrap">
+                        {{ this.type }}
+                    </td>
+                    <td data-field="published" class="text-center">
+                        {{#if this.published}}
+                        <span class="d-none">A</span><i class="fas fa-check text-success"></i> {{else}}
+                        <span class="d-none">B</span><i class="fas fa-ban text-danger"></i> {{/if}}
+                    </td>
+                    <td data-field="notes" class="text-center">
+                        {{#ifEquals this.info null}}
+                        <a href="" class="btn btn-sm btn-secondary disabled">
+                        <i class="fas fa-sticky-note"></i>
+                    </a> {{else}}
+                        <a href="" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-sticky-note"></i>
+                    </a> {{/ifEquals}}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ this.url }}" class="btn btn-sm btn-info">
+                        <i class="fas fa-info-circle"></i>
+                    </a>
+                    </td>
+                    <td class="text-center">
+                        <button data-screenshot-url="{{ this.cached_screenshot_url }}" class="btn btn-sm btn-success">
+                        <i class="fas fa-image"></i>
+                    </button>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ this.url }}/update" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ this.url }}/delete" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash"></i>
+                    </a>
+                    </td>
+                </tr>
+                {{/each}} {{/if}}
+            </tbody>
+            {{!--/tbody--}}
+        </table>
+        {{!--/table--}}
+    </div>
+    {{!--/.table-responsive-wrapper--}}
+</div>
+{{!--/.container--}}

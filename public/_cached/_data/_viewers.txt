@@ -1,0 +1,34 @@
+name: { type: String, required: true, max: 100 },
+    display_name: { type: String, required: true, max: 100 },
+    published: { type: Boolean, required: true },
+    date_created: { type: Date },
+    date_last_edited: { type: Date },
+    screenshot_last_updated: { type: Date },
+    screen_orientation: { type: String, enum: ['Portrait', 'Landscape'] },
+    type: { type: String, enum: ['Room Sign', 'Custom Sign', 'Agenda Wall Sign'] },
+    notes: { type: String, max: 500 }
+    
+db.viewers.insert([
+    {
+        "name": "Mark_Test_001",
+        "display_name": "Test_NUC_(001)",
+        "published": true,
+        "date_created": new Date(Date.now()),
+        "date_last_edited": new Date(Date.now()),
+        "screenshot_last_updated" : new Date(Date.now()),
+        "screen_orientation": "Landscape",
+        "type": "Custom Sign",
+        "notes": ""
+    },
+    {
+        "name": "Mark_Test_002",
+        "display_name": "Test_NUC_(002)",
+        "published": true,
+        "date_created": new Date(Date.now()),
+        "date_last_edited": new Date(Date.now()),
+        "screenshot_last_updated" : new Date(Date.now()),
+        "screen_orientation": "Portrait",
+        "type": "Room Sign",
+        "notes": ""
+    },
+]);

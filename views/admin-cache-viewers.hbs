@@ -1,0 +1,71 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"}]'}}
+
+    {{> page_title}}
+
+    <div class="row align-items-center mb-3">
+        <div class="col-12 col-md-3">
+            <p class="m-0 align-middle">
+                Displaying ({{viewer_list.length}}) Viewers
+            </p>
+        </div>
+        {{!--/.col--}}
+        <div class="col-12 col-md-9 text-md-right">
+            <a class="btn btn-secondary" href="/admin/viewers">
+                <i class="fa fa-database"></i>&nbsp; Viewer Records
+            </a>
+            <a class="btn btn-success" href="/admin/viewers/cache">
+                <i class="fa fa-sync"></i>&nbsp; Cache All Screenshots
+            </a>
+        </div>
+        {{!--/.col--}}
+    </div>
+    {{!--/.row--}}
+    <div class="table-responsive-wrapper">
+        <table class="table table-striped table-more-responsive tablesorter">
+            <thead class="thead-dark">
+                <tr>
+                    <th class="sortable align-middle">
+                        Viewer Name
+                    </th>
+                    <th class="sortable align-middle">
+                        Display Name
+                    </th>
+                    <th class="sortable align-middle">
+                        Screenshot Last Updated
+                    </th>
+                    <th class="non-sortable text-center align-middle">
+                        <i class="fas fa-sync"></i>
+                    </th>
+                </tr>
+            </thead>
+            {{!--/thead--}}
+            <tbody>
+                {{#if viewer_list}} {{#each viewer_list}}
+                <tr data-mongodb-id="{{ this._id }}">
+                    <td data-field="name">
+                        {{ this.name }}
+                    </td>
+                    <td data-field="display_name">
+                        {{ this.display_name }}
+                    </td>
+                    <td data-field="screenshot_last_updated" class="no-wrap">
+                        {{dateFormat this.screenshot_last_updated "YYYY-MM-DD hh:mm A"}}
+                    </td>
+                    <td class="text-center">
+                        <a href="{{ this.url }}/delete" class="btn btn-sm btn-danger">
+                        <i class="fas fa-sync"></i>
+                    </a>
+                    </td>
+                </tr>
+                {{/each}} {{/if}}
+            </tbody>
+            {{!--/tbody--}}
+        </table>
+        {{!--/table--}}
+    </div>
+    {{!--/.table-responsive-wrapper--}}
+</div>
+{{!--/.container--}}

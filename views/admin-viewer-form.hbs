@@ -1,0 +1,88 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Viewers","link":"\/admin\/viewers"}]'}}
+    
+    {{> page_title}}
+    
+    <form method="POST" action="">
+        {{#if errors}}
+        <ul class="list-unstyled">
+            {{#each errors}}
+            <li class="alert alert-danger">
+                {{{ this.msg }}}
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <div class="form-group">
+            <label for="name">Viewer Name</label>
+            <input class="form-control" id="name" type="text" placeholder="Viewer Name" name="name" required="true" value="{{{viewer.name}}}" />
+        </div>
+
+        <div class="form-group">
+            <label for="display_name">Display Name</label>
+            <input class="form-control" id="display_name" type="text" placeholder="Display Name" name="display_name" required="true" value="{{{viewer.display_name}}}" />
+        </div>
+        
+        <div class="form-group">
+            <label for="type">Viewer Type</label>
+            <select class="form-control" id="type" name="type">
+                <option {{#unless viewer}}selected{{/unless}} disabled>
+                    Select a Viewer Type
+                </option>
+                <option value="Custom Sign" {{#ifEquals viewer.type "Custom Sign"}}selected{{/ifEquals}}>
+                    Custom Sign
+                </option>
+                <option value="Agenda Wall Sign" {{#ifEquals viewer.type "Agenda Wall Sign"}}selected{{/ifEquals}}>
+                    Agenda Wall Sign
+                </option>
+                <option value="Room Sign" {{#ifEquals viewer.type "Room Sign"}}selected{{/ifEquals}}>
+                    Room Sign
+                </option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="screen_orientation">Viewer Orientation</label>
+            <select class="form-control" id="screen_orientation" name="screen_orientation">
+                <option {{#unless viewer}}selected{{/unless}} disabled>
+                    Select Viewer Orientation
+                </option>
+                <option value="Landscape" {{#ifEquals viewer.type "Landscape"}}selected{{/ifEquals}}>
+                    Landscape
+                </option>
+                <option value="Portrait" {{#ifEquals viewer.type "Portrait"}}selected{{/ifEquals}}>
+                    Portrait
+                </option>
+            </select>
+        </div>
+        
+        <div class="form-group mb-5">
+            <p>
+                Publish
+            </p>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="published" id="publishedRadios1" value="false" {{#unless viewer.published}}checked{{/unless}}>
+                <label class="custom-control-label" for="publishedRadios1">
+                    No
+                </label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="published" id="publishedRadios2" value="true" {{#if viewer.published}}checked{{/if}}>
+                <label class="custom-control-label" for="publishedRadios2">
+                    Yes
+                </label>
+            </div>
+        </div>
+        
+        {{!--Hidden Form Fields--}}
+        <div class="d-none">
+            <input name="date_created" value="{{viewer.date_created}}" id="date_created">
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Submit</button> <a href="/viewers/" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+{{!--/.container--}}

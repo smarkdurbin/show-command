@@ -1,0 +1,19 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Viewers","link":"\/admin\/viewers"}]'}}
+    
+    {{> page_title}}
+    
+    <form method="POST" action="">
+        <p>
+            Do you want to delete the viewer named {{viewer.display_name}}?
+        </p>
+        <div class="form-group">
+            <input type="hidden" name="viewerid" required="true" value="{{viewer._id}}" />
+        </div>
+        <button class="btn btn-danger" type="submit">Delete</button> <a href="/viewers/" class="btn btn-secondary">Cancel</a>
+    </form>
+    {{!--/form--}}
+</div>
+{{!--/.container--}}
