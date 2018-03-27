@@ -27,7 +27,7 @@ ViewerSchema
 ViewerSchema
     .virtual('cached_screenshot_url')
     .get(function() {
-        return '/_cached/_images/_viewer_screenshots/' + this.name + '.jpg';
+        return '/_cached/_images/_viewer_screenshots/' + this.name + '.png';
     });
     
 // Virtual for viewer's live screenshot

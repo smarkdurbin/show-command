@@ -23,6 +23,6 @@ var download = function(url, dest, cb) {
 };
 
 module.exports = function(viewer) {
-    return download(viewer.live_screenshot_url, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.jpg')
+    return download(viewer.live_screenshot_url, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.png')
     // return true;
 };
