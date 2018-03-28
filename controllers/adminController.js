@@ -51,10 +51,15 @@ exports.admin_viewer_cache_post = [
                 });
             },
             function(results, callback) {
-                cacheScreenshots.cacheAll(results);
-                callback(null,results);
-            },
-            function(results, callback) {
+                cacheScreenshots.cacheAll(results, function(viewer){
+                    Viewer.update({_id: viewer._id}, {
+                        screenshot_last_updated: new Date(Date.now())
+                    }).exec(function(err){
+                        if(err) {
+                            console.log(err);
+                        }
+                    });
+                });
                 callback(null,results);
             }
         ], function(err, results) {
@@ -78,27 +83,16 @@ exports.admin_viewer_detail = function(req, res, next) {
             });
         },
         function(results, callback) {
-            // attempt to cache screenshot
-            // callback(null, results, cacheScreenshots(results.viewer));
-            callback(null,results,true);
-        },
-        function(results, screenshotWasSuccess, callback) {
-            // if screenshot succeeds, update database record
-            if(screenshotWasSuccess) {
-                // Viewer.update({_id: results.viewer._id}, {
-                //     screenshot_last_updated: new Date(Date.now())
-                // }).exec(function(err){
-                //     if(err) {
-                //         callback(null, results);
-                //     } else {
-                //         results.viewer.screenshot_last_updated = new Date(Date.now());
-                //         callback(null, results);
-                //     }
-                // });
-                callback(null, results);
-            } else {
-                callback(null, results);
-            }
+            cacheScreenshots.cacheOne(results.viewer, function(viewer){
+                Viewer.update({_id: viewer._id}, {
+                    screenshot_last_updated: new Date(Date.now())
+                }).exec(function(err){
+                    if(err) {
+                        console.log(err);
+                    }
+                });
+            });
+            callback(null,results);
         }
     ], function(err, results) {
         if (err) { return next(err); }
@@ -160,7 +154,8 @@ exports.admin_viewer_create_post = [
             });
             viewer.save(function(err) {
                 if (err) { return next(err); }
-                cacheScreenshots(viewer);
+                // Success -- now cache that screenshot
+                cacheScreenshots.cacheOne(viewer, null);
                 // Successful - redirect to new viewer record.
                 res.redirect(viewer.url);
             });
