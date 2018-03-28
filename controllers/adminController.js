@@ -36,14 +36,31 @@ exports.admin_viewer_cache_get = function(req, res, next) {
 
 // Handle Viewer create on POST.
 exports.admin_viewer_cache_post = [
-
     // Process request
     (req, res, next) => {
-        Viewer.find({})
-        .exec(function(err, list_viewers) {
+        async.waterfall([
+            function(callback) {
+                Viewer.find({})
+                .exec(function(err, results) {
+                    if (err) {
+                        var err = new Error('Viewer Record not found');
+                        err.status = 404;
+                        return next(err);
+                    }
+                    callback(null,results);
+                });
+            },
+            function(results, callback) {
+                cacheScreenshots.cacheAll(results);
+                callback(null,results);
+            },
+            function(results, callback) {
+                callback(null,results);
+            }
+        ], function(err, results) {
             if (err) { return next(err); }
             //Successful, so render
-            res.render('admin-cache-viewers', { title: 'Viewer Cache Logs', viewer_list: list_viewers });
+            res.render('admin-cache-viewers', { title: 'Viewer Cache Logs', viewer_list: results });
         });
     }
 ];
@@ -54,6 +71,7 @@ exports.admin_viewer_detail = function(req, res, next) {
         function(callback) {
             var results = new Array();
             Viewer.findById(req.params.id).exec(function(err, doc){
+                if (err) { return next(err); }
                 // don't remove the callback
                 results.viewer = doc;
                 callback(null, results);
@@ -61,21 +79,23 @@ exports.admin_viewer_detail = function(req, res, next) {
         },
         function(results, callback) {
             // attempt to cache screenshot
-            callback(null, results, cacheScreenshots(results.viewer));
+            // callback(null, results, cacheScreenshots(results.viewer));
+            callback(null,results,true);
         },
         function(results, screenshotWasSuccess, callback) {
             // if screenshot succeeds, update database record
             if(screenshotWasSuccess) {
-                Viewer.update({_id: results.viewer._id}, {
-                    screenshot_last_updated: new Date(Date.now())
-                }).exec(function(err){
-                    if(err) {
-                        callback(null, results);
-                    } else {
-                        results.viewer.screenshot_last_updated = new Date(Date.now());
-                        callback(null, results);
-                    }
-                });
+                // Viewer.update({_id: results.viewer._id}, {
+                //     screenshot_last_updated: new Date(Date.now())
+                // }).exec(function(err){
+                //     if(err) {
+                //         callback(null, results);
+                //     } else {
+                //         results.viewer.screenshot_last_updated = new Date(Date.now());
+                //         callback(null, results);
+                //     }
+                // });
+                callback(null, results);
             } else {
                 callback(null, results);
             }
@@ -88,7 +108,6 @@ exports.admin_viewer_detail = function(req, res, next) {
             return next(err);
         }
         // results.viewer.screenshot_last_updated = new Date(Date.now());
-        console.log(results.viewer.screenshot_last_updated);
         // Successful, so render.
         res.render('admin-viewer', { title: 'Viewer Record: ' + results.viewer.display_name, viewer: results.viewer });
     });
@@ -231,7 +250,7 @@ exports.admin_viewer_update_post = [
             published: req.body.published,
             date_created: req.body.date_created,
             date_last_edited: new Date(Date.now()),
-            screenshot_last_updated: new Date(Date.now()),
+            screenshot_last_updated: req.body.screenshot_last_updated,
             screen_orientation: req.body.screen_orientation,
             type: req.body.type,
             notes: req.body.notes,
