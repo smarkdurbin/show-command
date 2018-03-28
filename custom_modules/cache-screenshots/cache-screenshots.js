@@ -23,7 +23,7 @@ var download = function(url, dest, cb) {
 };
 
 module.exports = function(viewer) {
-    return download('http://placehold.it/1920x1080/?text='+viewer.name, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.png');
-    // return download(viewer.live_screenshot_url, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.png');
+    // return download('http://placehold.it/1920x1080/?text='+viewer.name, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.png');
+    return download(viewer.live_screenshot_url, __dirname +'/../../public/_cached/_images/_viewer_screenshots/' + viewer.name + '.png');
     // return true;
 };
