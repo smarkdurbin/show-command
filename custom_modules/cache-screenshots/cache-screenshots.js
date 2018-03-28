@@ -34,7 +34,7 @@ function cacheAll(viewersObj) {
     viewersObj.forEach(function(viewer) {
         // Download to a directory and save with an another filename
         const options = {
-        //   url: 'http://placehold.it/500x500/?text=500PX TEST IMAGE',
+        //   url: 'http://placehold.it/1920x1080/?text=' + viewer.name,
           url: screenshotsAPIPath + viewer.name,
           dest: screenshotsCachePath + viewer.name + '.png'
         }
