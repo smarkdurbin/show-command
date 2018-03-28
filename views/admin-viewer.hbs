@@ -13,7 +13,7 @@
                 </h2>
                 <div class="card-body">
                     {{!--<img src="{{viewer.live_screenshot_url}}" class="img-fluid" onerror="this.src='http://placehold.it/1920x1080?text=IMAGE UNAVAILABLE'" />--}}
-                    <img src="{{viewer.cached_screenshot_url}}" class="img-fluid" />
+                    <img src="{{viewer.cached_screenshot_url}}" onerror="this.src='{{viewer.live_screenshot_url}}'" class="img-fluid" />
                     {{!--{{timeago viewer.screenshot_last_updated}}--}}
                 </div>
                 {{!--/card-body--}}
