@@ -2,7 +2,7 @@ var Viewer = require('../models/viewer');
 
 // Display Client Home Page
 exports.index = function(req, res, next) {   
-    res.render('client', { title: 'Client Dashboard' });
+    res.render('client', { title: 'Client Dashboard', cur_user: req.user });
 };
 
 // Display list of all Viewers.

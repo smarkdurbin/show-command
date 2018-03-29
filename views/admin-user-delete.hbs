@@ -1,0 +1,19 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Users","link":"\/admin\/users"}]'}}
+    
+    {{> page_title}}
+    
+    <form method="POST" action="">
+        <p>
+            Do you want to delete the user named {{user.username}}?
+        </p>
+        <div class="form-group">
+            <input type="hidden" name="userid" required="true" value="{{user._id}}" />
+        </div>
+        <button class="btn btn-danger" type="submit">Delete</button> <a href="/users/" class="btn btn-secondary">Cancel</a>
+    </form>
+    {{!--/form--}}
+</div>
+{{!--/.container--}}

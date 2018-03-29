@@ -1,12 +1,53 @@
 <header>
-    <div class="navbar navbar-dark bg-dark py-0">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a href="/" class="navbar-brand d-flex align-items-center py-0">
-              <img src="http://etechevents.com/wp-content/uploads/2017/11/cropped-etech-white-logo-1.png" style="width: 200px; height: auto">
-        </a>
-            <button class="navbar-toggler d-none" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+            <a class="navbar-brand" href="#">
+                <img src="http://etechworks.com/wp-content/uploads/2017/09/cropped-logo-1.png" style="width: 120px; height: auto;">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                    {{#ifEquals cur_user.access_level "Client"}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/client">Client</a>
+                    </li>
+                    {{/ifEquals}} {{#ifEquals cur_user.access_level "Administrator"}}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="/admin/viewers">Viewers</a>
+                            <a class="dropdown-item disabled" hrefs="/admin/floorplans">Floorplans</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/admin/users">Manage Users</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="/admin">Dashboard</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/client">Client</a>
+                    </li>
+                    {{/ifEquals}}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {{#if cur_user.username}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Logout</a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Login</a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
         </div>
-    </div>
+        {{!--/.container--}}
+    </nav>
 </header>

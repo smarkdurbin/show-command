@@ -4,6 +4,9 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -36,6 +39,13 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('express-session')({
+    secret: 'madeinjapants',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(sassMiddleware({
   src: path.join(__dirname, 'public'),
   dest: path.join(__dirname, 'public'),
@@ -44,7 +54,6 @@ app.use(sassMiddleware({
 }));
 app.use(express.static(path.join(__dirname, '/public/')));
 // app.use('/public', express.static(__dirname + "/public"));
-
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -64,11 +73,14 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.render('error',{ title: 'Error ' + err.status + ' - ' + err.message, cur_user: req.user });
 });
 
-//Import the mongoose module
-var mongoose = require('mongoose');
+// passport config
+var Account = require('./models/account');
+passport.use(new LocalStrategy(Account.authenticate()));
+passport.serializeUser(Account.serializeUser());
+passport.deserializeUser(Account.deserializeUser());
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://127.0.0.1/show-command';

@@ -1,0 +1,39 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"}]'}}
+
+    {{> page_title }}
+    
+    {{#if error}}
+    <ul class="list-unstyled">
+        <li class="alert alert-danger">
+            {{{ error }}}
+        </li>
+    </ul>
+    {{/if}}
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <form role="form" action="/register" method="post">
+                <div class="form-group">
+                    <input type="text" name="username" placeholder="Enter Username" class="form-control" />
+                </div>
+                {{#ifEquals cur_user.access_level "Administrator"}}
+                <div class="form-group">
+                    <select class="form-control" id="access_level" name="access_level">
+                        <option disabled selected>Select Access Level</option>
+                        <option value="Administrator">Administrator</option>
+                        <option value="Client">Client</option>
+                    </select>
+                </div>
+                {{/ifEquals}}
+                <div class="form-group mb-5">
+                    <input type="password" name="password" placeholder="Password" class="form-control" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>&nbsp;<a href="/" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+        {{!--/.col--}}
+    </div>
+    {{!--/.row--}}
+</div>

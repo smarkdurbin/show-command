@@ -1,0 +1,61 @@
+<div class="container">
+
+    {{!--Breadcrumbs--}} {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Users","link":"\/admin\/Users"}]'}} {{> page_title}}
+
+    <div class="row">
+        <div class="col-12 col-md-8">
+            
+        </div>
+        {{!--./col--}}
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h2 class="h5 card-header">
+                    User Record Details
+                </h2>
+                {{!--/.card-header--}}
+                <div class="card-body">
+                    <dl>
+                        <dt>
+                            User Name
+                        </dt>
+                        <dd class="text-muted">
+                            {{user.username}}
+                        </dd>
+                        <dt>
+                            Date Created
+                        </dt>
+                        <dd class="text-muted">
+                            {{dateFormat user.date_created "YYYY-MM-DD hh:mm A"}}
+                        </dd>
+                        <dt>
+                            Last Edited
+                        </dt>
+                        <dd class="text-muted">
+                            {{dateFormat user.date_last_edited "YYYY-MM-DD hh:mm A"}}
+                        </dd>
+                        <dt>
+                            Status
+                        </dt>
+                        <dd class="text-muted">
+                            {{#if user.isActive}}
+                            <i class="fas fa-check text-success"></i>&nbsp; Active {{else}}
+                            <i class="fas fa-ban text-danger"></i>&nbsp; Inactive {{/if}}
+                        </dd>
+                        <dt>
+                            User Type
+                        </dt>
+                        <dd class="text-muted">
+                            {{user.access_level}}
+                        </dd>
+                    </dl>
+                </div>
+                {{!--/.card-body--}}
+            </div>
+            {{!--/.card--}}
+        </div>
+        {{!--./col--}}
+    </div>
+    {{!--/.row--}}
+
+</div>
+{{!--/.container--}}

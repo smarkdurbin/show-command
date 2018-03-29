@@ -1,9 +1,6 @@
 <div class="container">
-    
-    {{!--Breadcrumbs--}}
-    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Viewers","link":"\/admin\/viewers"}]'}}
-    
-    {{> page_title}}
+
+    {{!--Breadcrumbs--}} {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Viewers","link":"\/admin\/viewers"}]'}} {{> page_title}}
 
     <div class="row">
         <div class="col-12 col-md-8">
@@ -14,9 +11,13 @@
                 <div class="card-body">
                     {{!--<img src="{{viewer.live_screenshot_url}}" class="img-fluid" onerror="this.src='http://placehold.it/1920x1080?text=IMAGE UNAVAILABLE'" />--}}
                     <img src="{{viewer.cached_screenshot_url}}" onerror="this.src='{{viewer.live_screenshot_url}}'" class="img-fluid" />
-                    {{!--{{timeago viewer.screenshot_last_updated}}--}}
                 </div>
                 {{!--/card-body--}}
+                <div class="card-footer text-muted">
+                    {{#if viewer.screenshot_last_updated }}
+                    Last updated <strong>{{timeago viewer.screenshot_last_updated}}</strong>
+                    {{/if}}
+                </div>
             </div>
             {{!--/.card--}}
         </div>

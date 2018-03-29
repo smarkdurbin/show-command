@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var fs = require('fs');
 
 var ViewerSchema = new Schema({
-    name: { type: String, required: true, max: 100 },
+    name: { type: String, required: true, max: 100, unique: true },
     display_name: { type: String, required: true, max: 100 },
     published: { type: Boolean, required: true },
     date_created: { type: Date },

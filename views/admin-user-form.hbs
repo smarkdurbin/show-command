@@ -1,0 +1,73 @@
+<div class="container">
+    
+    {{!--Breadcrumbs--}}
+    {{> breadcrumbs breadcrumbs='[{"text": "Home", "link": "\/"},{"text": "Admin", "link": "\/admin"},{"text":"Users","link":"\/admin\/Users"}]'}}
+    
+    {{> page_title}}
+    
+    <form method="POST" action="">
+        {{#if errors}}
+        <ul class="list-unstyled">
+            {{#each errors}}
+            <li class="alert alert-danger">
+                {{{ this.msg }}}
+            </li>
+            {{/each}}
+        </ul>
+        {{/if}}
+        <div class="form-group">
+            <label for="username">User Name</label>
+            <input class="form-control" id="username" type="text" placeholder="User Name" name="username" required="true" value="{{{user.username}}}" />
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input class="form-control" id="password" placeholder="Password" type="password" name="password" required="true" value="" />
+        </div>
+        
+        <div class="form-group">
+            <label for="access_level">User Type</label>
+            <select class="form-control" id="access_level" name="access_level">
+                <option {{#unless user}}selected{{/unless}} disabled>
+                    Select a User Type
+                </option>
+                <option value="Administrator" {{#ifEquals user.access_level "Administrator"}}selected{{/ifEquals}}>
+                    Administrator
+                </option>
+                <option value="Client" {{#ifEquals user.access_level "Client"}}selected{{/ifEquals}}>
+                    Client
+                </option>
+            </select>
+        </div>
+        
+        <div class="form-group mb-5">
+            <p>
+                Active
+            </p>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="isActive" id="isActiveRadios1" value="false" {{#unless user.isActive}}checked{{/unless}}>
+                <label class="custom-control-label" for="isActiveRadios1">
+                    No
+                </label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input class="custom-control-input" type="radio" name="isActive" id="isActiveRadios2" value="true" {{#if user.isActive}}checked{{/if}}>
+                <label class="custom-control-label" for="isActiveRadios2">
+                    Yes
+                </label>
+            </div>
+        </div>
+        
+        {{!--Hidden Form Fields--}}
+        <div class="d-none">
+            <input name="date_created" value="{{User.date_created}}" id="date_created">
+        </div>
+        <div class="d-none">
+            <input name="date_created" value="{{User.screenshot_last_updated}}" id="screenshot_last_updated">
+        </div>
+        
+        <button class="btn btn-primary" type="submit">Submit</button> <a href="/admin/Users/" class="btn btn-secondary">Cancel</a>
+    </form>
+
+</div>
+{{!--/.container--}}
