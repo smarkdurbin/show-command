@@ -15,8 +15,8 @@ function cacheOne(viewerObj, callback) {
     // Download to a directory and save with an another filename
     // Download to a directory and save with an another filename
     const options = {
-          url: 'http://placehold.it/1920x1080/?text=' + viewerObj.name,
-        // url: screenshotsAPIPath + viewerObj.name,
+        //   url: 'http://placehold.it/1920x1080/?text=' + viewerObj.name,
+        url: screenshotsAPIPath + viewerObj.name,
         dest: screenshotsCachePath + viewerObj.name + '.png'
     }
     download.image(options)

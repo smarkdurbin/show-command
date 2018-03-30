@@ -15,6 +15,19 @@ var clientRouter = require('./routes/client');
 
 var app = express();
 
+// begin socket.io edit
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
+
+// end socket.io edit
+
+// begin socket.io edit
+app.use(function(req, res, next){
+  res.io = io;
+  next();
+});
+// end socket.io edit
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
@@ -53,7 +66,6 @@ app.use(sassMiddleware({
   sourceMap: true
 }));
 app.use(express.static(path.join(__dirname, '/public/')));
-// app.use('/public', express.static(__dirname + "/public"));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -93,4 +105,10 @@ var db = mongoose.connection;
 //Bind connection to error event (to get notification of connection errors)
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-module.exports = app;
+
+// begin socket.io edit
+
+module.exports = {app: app, server: server};
+// module.exports = app;
+
+// end socket.io edit

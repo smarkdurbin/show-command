@@ -23,6 +23,7 @@ exports.admin_viewer_list = function(req, res, next) {
     Viewer.find({})
         .exec(function(err, list_viewers) {
             if (err) { return next(err); }
+            // res.io.emit("socketToMe", list_viewers); 
             //Successful, so render
             res.render('admin-viewers', { title: 'Viewer Record List', viewer_list: list_viewers, cur_user: req.user });
         });

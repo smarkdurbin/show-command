@@ -34,7 +34,7 @@ router.post('/viewers/~/:id/update', needsAccessLevel('Administrator'), admin_co
 router.get('/viewers/~/:id', needsAccessLevel('Administrator'), admin_controller.admin_viewer_detail);
 
 // GET request for list of all Viewer items.
-router.get('/viewers/', needsAccessLevel('Administrator'), admin_controller.admin_viewer_list);
+router.get('/viewers/'/*, needsAccessLevel('Administrator')*/, admin_controller.admin_viewer_list);
 
 // ========================================================================== //
 

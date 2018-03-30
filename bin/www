@@ -4,7 +4,13 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+// begin socket.io edit
+
+var app = require('../app').app;
+
+// var app = require('../app');
+
+// end socket.io edit
 var debug = require('debug')('test:server');
 var http = require('http');
 
@@ -12,15 +18,22 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
-// var port = normalizePort(process.env.PORT || '8080');
+// var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '8080');
+// var port = normalizePort('3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+// begin socket.io edit
+
+var server = require('../app').server;
+
+// var server = http.createServer(app);
+
+// end socket.io edit
 
 /**
  * Listen on provided port, on all network interfaces.
